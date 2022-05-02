@@ -1,7 +1,20 @@
-import {StyleSheet, Text, View} from 'react-native';
-import React from 'react';
+import {Alert, StyleSheet, Text, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {GeoLocation} from '../utils/geo-location/geo-location';
 
 const Home = () => {
+  useEffect(() => {
+    GeoLocation.getInstance()
+      .getGeoLocation()
+      .then(res => {
+        Alert.alert('Location', `${JSON.stringify(res.coords)}`);
+      })
+      .catch(error => {
+        // Show user proper message or something.
+        console.error(error);
+      });
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text>Home</Text>
